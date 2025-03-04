@@ -1,0 +1,1 @@
+# Aim to have collectables inthe game

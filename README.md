@@ -1,10 +1,68 @@
-# RPG Game
-Creating an rpg game with pygame
+# RPG game - Phase3 Personal Project
 
-### Required:
-    game.py - helps with game functionality
-    player.py - controls the player
-    enemy.py - control enemy functionality
-# wire frames
-* Pygame
+This RPG is a 2D top-down adventure game where you control a character in a dangerous world filled with enemies. Collect coins to increase your score and health, while avoiding or defeating increasingly difficult enemies. The game features progressive difficulty with enemies growing stronger as you level up.
 
+### My File Structure:
+
+* main.py: Entry point to start the game
+* game.py: Main game class that handles game loop and logic
+* player.py: Player class with movement, animation, and health mechanics
+* enemy.py: Enemy class that scales with difficulty
+* coin.py: Collectible items 
+* settings.py: Game constants and configuration
+
+## Game Mechanics
+
+### Player
+- Move in four directions using WASD or arrow keys
+- Health bar displays current health status
+- Collect coins to increase score
+- Every 10 coins collected:
+  - Gain 20 health points
+  - Level up, increasing game difficulty
+
+### Enemies
+
+
+### Coins
+
+
+### Game Progression
+- Game difficulty increases with each level
+
+
+
+
+## Controls
+- **Movement**: WASD or Arrow keys
+
+## How to Play
+1. Run the game using Python: `python main.py`
+2. Move your character to collect coins
+3. Avoid enemies or they will damage your health
+4. Survive as long as possible and achieve a high score
+
+## How to Win
+The game is an endless survival challenge. Your goal is to achieve the highest score and level possible before losing all health.
+
+## How to Defeat Enemies
+This is a survival game - your primary strategy should be to avoid enemies rather than defeat them directly. As you collect coins and progress through levels, enemies become more challenging, requiring better evasive maneuvers.
+
+## Requirements
+- Python 3.6+
+- Pygame library
+
+## Installation
+1. Clone the repository
+2. Install the required packages: `pip install pygame`
+3. Run the game: `python main.py`
+
+## Tips & Strategies
+- Keep moving to avoid enemies
+- Prioritize coin collection to level up and gain health
+- Use the edges of the screen strategically - enemies spawn from outside
+- Watch for the invincibility period after taking damage (player flashes)
+- Plan escape routes, especially as enemies get faster at higher levels
+
+## Credit
+Created as a beginner-friendly game project using Python and Pygame.
