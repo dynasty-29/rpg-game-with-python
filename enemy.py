@@ -13,9 +13,9 @@ class Enemy(pygame.sprite.Sprite):
         
         # Enemy stats based on level
         self.level = level
-        self.size = 40 + (level * 5)  # Size increases with level
-        self.speed = 1 + (level * 0.2)  # Speed increases with level
-        self.damage = 5 + (level * 2)  # Damage increases with level
+        self.size = 40 + (level * 5)  
+        self.speed = 1 + (level * 0.2)  
+        self.damage = 5 + (level * 2)  
         
         # Resize image based on enemy size
         self.original_image = pygame.transform.scale(self.original_image, (self.size, self.size))
