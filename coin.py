@@ -27,8 +27,6 @@ class Coin(pygame.sprite.Sprite):
         self.float_offset += 0.05
         self.rect.y = self.original_y + int(math.sin(self.float_offset) * 5)
         
-        # Optional: Rotate the coin slightly
-        # This would require saving the original image and rotating a copy
-        
+              
         # Update mask for better collision
         self.mask = pygame.mask.from_surface(self.image)

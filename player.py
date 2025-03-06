@@ -23,6 +23,10 @@ class Player(pygame.sprite.Sprite):
         self.invincible_timer = 0
         self.facing_right = True
         
+        # adding ability of player to attack too
+        self.attack_damage = 20
+        self.attacke_cooldown
+        
     def update(self):
         # Get keyboard input
         keys = pygame.key.get_pressed()
@@ -71,7 +75,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.image.set_alpha(255)
                 
-            if self.invincible_timer >= 60:  # 1 second of invincibility
+            if self.invincible_timer >= 60:  
                 self.invincible = False
                 self.invincible_timer = 0
                 self.image.set_alpha(255)
