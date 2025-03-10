@@ -78,7 +78,7 @@ class Game:
             y = random.randint(0, HEIGHT)
         
         # now lets create new enemies at each position set above 
-        enemy = Enemy(x, y, self.level)
+        enemy = Enemy(x, y, self.level, self.player)
         
         #  onces created we add them to the game
         self.all_sprites.add(enemy)
@@ -113,35 +113,51 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            
+                
+            # trying to handle player attacks
+            if event.type == pygame.KEYDOWN and not self.game_over:
+                # using space bar as the attack to enemy
+                if event.key == pygame.K_SPACE:  
+                    self.player.attack()  
+                      
+            # What happens if player is over powered
             if event.type == pygame.KEYDOWN and self.game_over:
                 if event.key == pygame.K_r:
                     self.__init__() 
+                    
     def handle_update(self):
         # to continously update the game logic
         if not self.game_over:
             # 1. always update all sprites
             self.all_sprites.update()
             
-            # 2. Check for player collision with enemies
+            # 2. Ensuring player attacks hitting enemies
+            if self.player.attacking:
+                for enemy in self.enemies:
+                    if self.player.attack_rect.colliderect(enemy.rect):
+                        enemy.take_damage(self.player.attack_damage)
+                        self.hit_sound.play()
+                self.player.attacking = False
+            
+            # 3. Check for player collision with enemies
             hits = pygame.sprite.spritecollide(self.player, self.enemies, False, pygame.sprite.collide_mask)
             for hit in hits:
                 self.player.take_damage(hit.damage)
-                # 3. Ensure the hit sound effect we added is effect when the collision happens
+                # 4. Ensure the hit sound effect we added is effect when the collision happens
                 self.hit_sound.play()
                 
-                # 4. Check if player is dead by checking lifes left
+                # 5. Check if player is dead by checking lifes left
                 if self.player.health <= 0:
                     self.game_over = True
             
-            # 5. Check for player collection of coins whenever they come incontact with them
+            # 6. Check for player collection of coins whenever they come incontact with them
             coin_hits = pygame.sprite.spritecollide(self.player, self.coins, True)
             for coin in coin_hits:
                 self.score += 1
                 #  as usual play the sound effect we set for this collection
                 self.coin_sound.play()
                 
-                # 6. we need to boost player health for every 10 coins they collect
+                # 7. we need to boost player health for every 10 coins they collect
                 if self.score % 10 == 0:
                     self.player.heal(20)
                     # 7. also leveling up

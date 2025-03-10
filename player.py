@@ -23,9 +23,13 @@ class Player(pygame.sprite.Sprite):
         self.invincible_timer = 0
         self.facing_right = True
         
-        # adding ability of player to attack too
+        # adding ability of player to attack too, 
+        # This is just trial if it doesn't work i will just comment it out
         self.attack_damage = 20
-        self.attacke_cooldown
+        self.attack_cooldown = 30
+        self.attack_timer = 0      
+        self.attacking = False     
+        self.attack_rect = pygame.Rect(0, 0, 80, 80) 
         
     def update(self):
         # Get keyboard input
@@ -79,14 +83,48 @@ class Player(pygame.sprite.Sprite):
                 self.invincible = False
                 self.invincible_timer = 0
                 self.image.set_alpha(255)
+                
+        # Handle attack cooldown
+        if self.attack_timer > 0:
+            self.attack_timer -= 1
+        
+        # Update attack hitbox position based on facing direction
+        if self.facing_right:
+            self.attack_rect.midleft = self.rect.midright
+        else:
+            self.attack_rect.midright = self.rect.midleft        
         
         # Update mask for better collision
         self.mask = pygame.mask.from_surface(self.image)
-        
+    
+    # Function to hanlde how player takes damage and records it
     def take_damage(self, amount):
         if not self.invincible:
             self.health -= amount
             self.invincible = True
             
+     # Function to handle how player heals mostly through more coins collection      
     def heal(self, amount):
         self.health = min(self.health + amount, self.max_health)
+    
+    # Function to enable player to attack the enemy not just to run away from them
+    def attack(self):
+        if self.attack_timer == 0:
+            self.attacking = True
+            self.attack_timer = self.attack_cooldown
+            return True
+        return False
+    
+    #  we want to ensure the enemy is hit
+    def check_enemy_hits(self, enemies):
+        if not self.attacking:
+            return
+            
+        hits = []
+        for enemy in enemies:
+            if self.attack_rect.colliderect(enemy.rect):
+                enemy.take_damage(self.attack_damage)
+                hits.append(enemy)
+        
+        self.attacking = False
+        return hits
